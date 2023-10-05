@@ -1,0 +1,15 @@
+Le développement informatique est composé de trois types de développement différents.
+Premièrement, le développement de logiciels désigne tous les processus impliqués dans le développement d’un logiciel :
+étude, conception, construction et amélioration des logiciels.
+
+Ensuite, le développement web consiste à réaliser des fonctionnalités techniques d’un site internet et d’une application web en se basant sur des besoins et des spécifications présentées dans un cahier des charges.
+Un développeur web analyse des besoins et des solutions techniques adaptées pour concevoir des fonctionnalités pour un site Internet.
+
+Enfin, quand la naissance des smartphones et de tablettes vendus chaque jour permet une grande évolution dans l’univers du numérique, le développement mobile est devenu un métier de grande tendance.
+
+Quel que soit le type de développement, tous les développeurs web écrivent des programmes exécutés par les ordinateurs en utilisant des langages informatiques (HTML/CSS, Javascript, PHP…).
+Étant à l’écoute des clients, il réalise des instructions composées de textes et d’éléments graphiques qui seront ensuite mises en place sur la toile et effectuées sur des serveurs.
+
+Ce spécialiste du développement informatique peut se charger de l’écriture d’une ou plusieurs parties d’un programme, voire le concevoir dans sa totalité.
+Il détaille les lignes de code informatique, c’est-à-dire les ordres que l’ordinateur va comprendre. De plus en plus, il a recours à des logiciels standards prêts à être utilisés (progiciels), qui lui font gagner un temps considérable.
+Ensuite, il participe aux phases d’essai, essentielles pour tester les applications.

@@ -1,0 +1,9 @@
+Le langage SQL (Structured Query Language) est un langage informatique utilisé pour exploiter des bases de données.
+Il permet de façon générale la définition, la manipulation et le contrôle de sécurité de données.
+
+Dans la pratique, le langage SQL est utilisé pour créer des tables, ajouter des enregistrements sous forme de lignes, interroger une base de données, la mettre à jour, ou encore gérer les droits d'utilisateurs de cette base de données.
+Il est bien supporté par la très grande majorité des systèmes de gestion de base de données (SGBD).
+Créé au début des années 1970 par Donald D. Chamberlin et Raymond F. Boyce, tous deux chez IBM, le langage SQL est aujourd'hui reconnu comme une norme internationale.
+
+De nombreuses bases de données s'appuient sur le langage SQL.
+C'est le cas de MySQL qui fait partie de la suite de logiciels libres LAMP, mais aussi des serveurs de base de données Oracle, Microsoft SQL Server, etc.

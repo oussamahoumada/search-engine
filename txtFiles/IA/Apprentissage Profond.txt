@@ -1,0 +1,5 @@
+L'apprentissage profond ou apprentissage en profondeur (en anglais : deep learning, deep structured learning, hierarchical learning) est un sous-domaine de l’intelligence artificielle
+qui utilise des réseaux neuronaux pour résoudre des tâches complexes grâce à des architectures articulées de différentes transformations non linéaires.
+Ces techniques ont permis des progrès importants et rapides dans les domaines de l'analyse du signal sonore ou visuel et notamment de la reconnaissance faciale, de la reconnaissance
+vocale, de la vision par ordinateur, du traitement automatisé du langage. Durant les années 2000, ces progrès ont suscité des investissements privés,
+universitaires et publics importants, notamment de la part des GAFAM (Google, Apple, Facebook, Amazon, Microsoft).

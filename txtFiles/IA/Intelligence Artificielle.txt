@@ -1,0 +1,13 @@
+L'intelligence artificielle (IA) est un ensemble de théories et de techniques visant à réaliser des machines capables de simuler l'intelligence humaine.
+
+Souvent classée dans le groupe des mathématiques et des sciences cognitives, elle fait appel à la neurobiologie computationnelle (particulièrement aux réseaux neuronaux) et à la logique
+mathématique (partie des mathématiques et de la philosophie). Elle utilise des méthodes de résolution de problèmes à forte complexité logique ou algorithmique.
+Par extension, elle comprend, dans le langage courant, les dispositifs imitant ou remplaçant l'homme dans certaines mises en œuvre de ses fonctions cognitives.
+
+Les applications de l'IA incluent notamment moteurs de recherche, systèmes de recommandation, compréhension du langage naturel, voitures autonomes,
+chatbots, outils de génération d'images, outils de prise de décision automatisée et programmes compétitifs dans des jeux de stratégie.
+
+Ses finalités et enjeux ainsi que son développement suscitent, depuis l'apparition du concept, de nombreuses interprétations,
+fantasmes ou inquiétudes s'exprimant tant dans les récits ou films de science-fiction que dans les essais philosophiques.
+Si des outils relevant d'intelligences artificielles spécialisées ou génératives ont fait leurs preuves, la réalité semble encore tenir l'intelligence artificielle généraliste
+loin des performances du vivant dans toutes ses aptitudes naturelles.

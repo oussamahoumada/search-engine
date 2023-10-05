@@ -1,0 +1,20 @@
+Encore confus pour de nombreuses personnes, le Machine Learning est une science moderne permettant de découvrir des répétitions (des patterns) dans un ou plusieurs flux de données
+et d’en tirer des prédictions en se basant sur des statistiques. En clair, le Machine Learning se base sur le forage de données, permettant la reconnaissance de patterns pour fournir
+des analyses prédictives.
+
+Les premiers algorithmes de Machine Learning ne datent pas d’hier, puisque certains ont été conçus dès 1950, le plus connu d’entre eux étant le Perceptron.
+
+Le Machine Learning révèle tout son potentiel dans les situations où des insights (tendances) doivent être repérés à partir de vastes ensembles de données diverses et variées,
+appelés le Big Data.
+
+Pour analyser de tels volumes de données, le Machine Learning se révèle bien plus efficace en termes de vitesse et de précisions que les autres méthodologies traditionnelles.
+À titre d’exemple, le Machine Learning est capable de déceler une fraude en une milliseconde, rien qu’en se basant sur des données issues d’une transaction (montant, localisation…),
+ainsi que sur d’autres informations historiques et sociales qui lui sont rattachées. En ce qui concerne l’analyse de données transactionnelles, de données issues de plateformes CRM
+ou bien des réseaux sociaux, là encore le Machine Learning se révèle désormais indispensable.
+
+Le Machine Learning est réellement la science idéale pour tirer profit du Big Data et de ses opportunités. Cette technologie est en effet capable d’extraire les données de valeur parmi
+d’immenses sources d’informations complexes, et ce sans avoir à faire appel aux humains. Entièrement dirigé par les données, le Machine Learning convient donc parfaitement
+à la complexité du Big Data, dont il est réellement indissociable. Là où les outils analytiques traditionnels se heurtent bien souvent à un volume maximal de données
+pouvant être analysées, le Machine Learning révèle au contraire tout son potentiel lorsque les sources de données sont croissantes, lui permettant d’apprendre et d’affiner
+des insights avec une précision toujours améliorée. En clair, plus les données sont nombreuses, plus les ordinateurs dotés de Machine Learning sont puissants et peuvent découvrir
+des patterns enfouis dans ces données avec nettement plus d’efficacité que ne le ferait l’intelligence humaine.
