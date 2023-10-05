@@ -11,7 +11,7 @@ function _multiexplode ($delimiters,$string) {
 //Cette fonction return tous les mots et le nobre de repetition de chaque mot d'un fichier donnee
 function _loadDataFromFile($path){
     $imp = implode(" ", file($path));
-    $ponctuation_arr = [" ","…","!", "?", ".", ",", ";", ":", "(", ")","{","}","[","]","-","+","=","/","\\","d'","d’","l'","l’","s'","s’"];
+    $ponctuation_arr = [" ","…","!", "?", ".", ",", ";", ":", "(", ")","{","}","[","]","—","-","+","=","/","\\","d'","d’","l'","l’","s'","s’"];
     $exp = _multiexplode($ponctuation_arr, $imp);
     return array_count_values(_deleteStopWords($exp)); 
 }
@@ -41,7 +41,7 @@ function _afficher($result,$mot,$c){
     echo ("<br>");
     echo ("<ol>");
     foreach ($result as $k => $v) {
-        $path = "http://localhost/Paris8/TP_Web_Recherche/Rendu/views/affichage/?url=".$v['path'];
+        $path = "http://localhost/Paris8/Master2/tp-web-search-engine/search-engine/views/affichage/?url=".$v['path'];
         echo ("<li><a href='".$path."' target='_blank'>".$v['name']."</a>(".$v['frequence'].")</li>");
         echo "<p style='margin-left:20px; font-size:12px; opacity: 50%;'>"._addStyle(file_get_contents($v['path'],null,null,null,250), $mot)." ...</p>";
     }
