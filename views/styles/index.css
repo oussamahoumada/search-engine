@@ -1,0 +1,38 @@
+.content {
+  border-style: solid;
+  margin: 20px 20%;
+  border-color: lightblue;
+  border-radius: 1%;
+}
+
+.row {
+  padding: 5% 25%;
+}
+
+u {
+  margin-left: 1%;
+}
+
+#input {
+  width: 250px;
+}
+
+.SearchImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  margin: 2% 0;
+}

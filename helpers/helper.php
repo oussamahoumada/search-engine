@@ -39,13 +39,13 @@ function _deleteStopWords($arr){
 function _afficher($result,$mot,$c){
     echo ("<u>Nombre de réponses pour (<b>".$mot."</b>) :</u> ".$c);
     echo ("<br>");
-    echo ("<ol>");
+    echo ("<ul type='circle'>");
     foreach ($result as $k => $v) {
         $path = "http://localhost/Paris8/Master2/tp-web-search-engine/search-engine/views/affichage/?url=".$v['path'];
         echo ("<li><a href='".$path."' target='_blank'>".$v['name']."</a>(".$v['frequence'].")</li>");
         echo "<p style='margin-left:20px; font-size:12px; opacity: 50%;'>"._addStyle(file_get_contents($v['path'],null,null,null,250), $mot)." ...</p>";
     }
-    echo ("</ol>");
+    echo ("</ul>");
 }
 
 function _addStyle($text, $mot){
