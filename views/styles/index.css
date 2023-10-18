@@ -17,13 +17,6 @@ u {
   width: 250px;
 }
 
-.SearchImage {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30%;
-}
-
 .center {
   display: block;
   margin-left: auto;
@@ -36,3 +29,4 @@ u {
   text-align: center;
   margin: 2% 0;
 }
+

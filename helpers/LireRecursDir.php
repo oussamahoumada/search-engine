@@ -39,6 +39,7 @@ function explorerDir($path)
 					foreach ($words as $key => $value) {
 						$wId = null;
 						if($key!="" && !is_numeric($key)){
+							//$newWord = shell_exec(escapeshellcmd("python lemmatisation.py ".$key));
 							$wId = findWord($key);
 							if($wId==false){
 								$word = new word($key);

@@ -22,10 +22,9 @@ session_start();
 </head>
 
 <body>
-    <h1 class="title">Search Engine</h1>
+    <h1 class="title"> Search Engine </h1>
     <div class="content">
-        <img src="../helpers/images.jpg" class="SearchImage">
-        <form class="row">
+        <form class="row" style="padding-bottom:1%">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">Search</span>
                 <input type="text" class="form-control" name="search" placeholder="Write something"
@@ -52,10 +51,8 @@ session_start();
         }
 
         if ($search != "") {
-            //$search = $_GET['search'];
             $tab = explode(" ", $search);
-
-            //$result = _getAllFrequency($search);
+            
             $result = _getWord($search);
 
             $c = count($result);
@@ -65,22 +62,37 @@ session_start();
             } else {
                 getData(1, $result, $search, $c);
             }
-            //_afficher($result);
             //Pagination
-            echo ('<br>');
-            echo '<div>
+            if (pagination($c) > 1) {
+                echo ('<br>');
+                echo '<div>
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-center">
                 ';
-            for ($i = 1; $i <= pagination($c); $i++) {
-                echo '<li class="page-item"><a class="page-link" href="?p=' . $i . '">' . $i . '</a></li>';
-            }
-            echo "      </ul>
+                for ($i = 1; $i <= pagination($c); $i++) {
+                    echo '<li class="page-item"><a class="page-link" href="?p=' . $i . '">' . $i . '</a></li>';
+                }
+                echo "  </ul>
                     </nav>
-                 </div>";
+                </div>";
+            }
+
         }
         ?>
     </div>
+    <script>
+        function showDialog(param) {
+            param.addEventListener("keydown", (e) => {
+                if (e.key === "Escape") {
+                    e.preventDefault();
+                }
+            });
+            param.showModal();
+        }
+        function closeDialog(param) {
+            param.close();
+        }
+    </script>
 </body>
 
 </html>

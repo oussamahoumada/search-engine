@@ -13,12 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .cloud{
-            width: 100%;
-            text-align: -webkit-center;
-            margin-top: 5%;
-        }
-        .content{
+        .fileContent{
             text-align: justify;
             margin:0 10%;
         }
@@ -26,18 +21,10 @@
 </head>
 <body >
     <h1 style="text-align:center;">Content</h1>
-    <div class="content">
+    <div class="fileContent">
         <?php
             if(isset($_GET['url']))
                 echo _addStyle(file_get_contents( $_GET['url'] ),$_SESSION["search"]);
-        ?>
-    </div>
-    <div class="cloud">
-        <h2> Keyword Cloud </h2>
-        <?php
-            $keywords = _loadDataFromFile($_GET['url']);
-            $wordCloudHTML = generateWordCloud($keywords);
-            echo "<div style='width: 500px'>".$wordCloudHTML."</div>";
         ?>
     </div>
 </body>
