@@ -88,15 +88,18 @@ function _addStyle($text, $words)
     $arr = explode(" ", $text);
     foreach ($wordsToMarke as $v) {
         for ($i = 0; $i < count($arr); $i++) {
-            if (strpos(strtolower($arr[$i]), strtolower($v)) !== false) {
-                $arr[$i] = str_ireplace(strtolower($v), "<b style='color:orange;'>" . $v . "</b>", strtolower($arr[$i]));
+            if (strpos(strtolower(removeAccents($arr[$i])), strtolower(removeAccents($v))) !== false) {
+                $arr[$i] = str_ireplace(strtolower($arr[$i]), "<b style='color:orange;'>" . $arr[$i] . "</b>", strtolower($arr[$i]));
             }
         }
     }
     
     return implode(" ", $arr);
 }
-
+function removeAccents($string)
+{
+    return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', preg_replace('~&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8'))), ' '));
+}
 function prepareSearchInput($serchInput)
 {
     $ponctuation_arr = [" ", "…", "!", "?", ".", ",", ";", ":", "(", ")", "{", "}", "[", "]", "—", "-", "+", "=", "/", "\\", "d'", "d’", "l'", "l’", "s'", "s’"];
