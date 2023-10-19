@@ -54,14 +54,20 @@ session_start();
             $tab = explode(" ", $search);
             
             $result = _getWord($search);
-
+            
             $c = count($result);
 
-            if (isset($_GET['p']) && $_GET['p'] > 0 && $_GET['p'] <= pagination($c)) {
-                getData($_GET['p'], $result, $search, $c);
-            } else {
-                getData(1, $result, $search, $c);
+            if($c==0){
+                echo "<i style='color:red'>Try with this spelling</i> : ";
+                echo(spellCorrection($search));
             }
+
+            if (isset($_GET['p']) && $_GET['p'] > 0 && $_GET['p'] <= pagination($c)) {
+                $filArray = array_slice($result, ($_GET['p'] - 1) * 4, (($_GET['p'] - 1) * 4) + 4);
+            } else {
+                $filArray = array_slice($result, 0, 4);                
+            }
+            _afficher($filArray, $search, $c);
             //Pagination
             if (pagination($c) > 1) {
                 echo ('<br>');

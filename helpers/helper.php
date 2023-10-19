@@ -13,9 +13,8 @@ function _multiexplode($delimiters, $string)
 function _loadDataFromFile($path)
 {
     $imp = implode(" ", file($path));
-    $ponctuation_arr = [" ", "…", "!", "?", ".", ",", ";", ":", "(", ")", "{", "}", "[", "]", "—", "-", "+", "=", "/", "\\", "d'", "d’", "l'", "l’", "s'", "s’"];
-    $exp = _multiexplode($ponctuation_arr, $imp);
-    return array_count_values(_deleteStopWords($exp));
+    $exp = prepareSearchInput($imp);
+    return array_count_values($exp);
 }
 
 //Cette fonction permet a supprimer les espaces et transformer majuscule en minuscule
@@ -46,18 +45,28 @@ function _afficher($result, $mot, $c)
     echo ("<br>");
     echo ("<ul type='circle'>");
     foreach ($result as $k => $v) {
+        $freq = $v['libelle'] . "<sup>" . $v['frequence'] . "</sup>";
+        if (count($v) > 4) {
+            for ($i = 1; $i <= (((count($v)) - 4) / 2); $i++) {
+                $lib = "libelle" . $i;
+                $fr = "frequence" . $i;
+                $freq .= ", " . $v[$lib] . "<sup>" . $v[$fr] . "</sup>";
+            }
+        }
+
         $path = "http://localhost/Paris8/Master2/tp-web-search-engine/search-engine/views/affichage/?url=" . $v['path'];
         $dialog = "dialogBox" . $k;
         echo ("<li>
                 <a href='" . $path . "' target='_blank'>"
             . $v['name'] .
-            "</a>(" . $v['frequence'] . ")
+            "</a>(" . $freq . ")
                     <button onclick='showDialog(" . $dialog . ")' style='border: none;background: none;'>
                         <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cloud' viewBox='0 0 16 16'>
                             <path d='M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z'/>
                         </svg>
                     </button>
             </li>");
+        
         echo "<p style='margin-left:20px; font-size:12px; opacity: 50%;'>" . _addStyle(file_get_contents($v['path'], null, null, null, 250), $mot) . " ...</p>";
         $keywords = _loadDataFromFile($v['path']);
         $wordCloudHTML = generateWordCloud($keywords);
@@ -73,34 +82,71 @@ function _afficher($result, $mot, $c)
     echo ("</ul>");
 }
 
-function _addStyle($text, $mot)
+function _addStyle($text, $words)
 {
+    $wordsToMarke = prepareSearchInput($words);
     $arr = explode(" ", $text);
-    for ($i = 0; $i < count($arr); $i++) {
-        if (strpos(strtolower($arr[$i]), strtolower($mot)) !== false) {
-            $arr[$i] = str_ireplace(strtolower($mot),"<b style='color:orange;'>" . $mot . "</b>", strtolower($arr[$i]));
+    foreach ($wordsToMarke as $v) {
+        for ($i = 0; $i < count($arr); $i++) {
+            if (strpos(strtolower($arr[$i]), strtolower($v)) !== false) {
+                $arr[$i] = str_ireplace(strtolower($v), "<b style='color:orange;'>" . $v . "</b>", strtolower($arr[$i]));
+            }
         }
     }
+    
     return implode(" ", $arr);
+}
+
+function prepareSearchInput($serchInput)
+{
+    $ponctuation_arr = [" ", "…", "!", "?", ".", ",", ";", ":", "(", ")", "{", "}", "[", "]", "—", "-", "+", "=", "/", "\\", "d'", "d’", "l'", "l’", "s'", "s’"];
+    $exp = _multiexplode($ponctuation_arr, $serchInput);
+    return _deleteStopWords($exp);
 }
 //Cette fonction permet de chercher un mot dans la base de donnée
 function _getWord($word)
 {
+    /*
+        $chemain = "../scripts/lemmatisation.py";
+        var_dump(shell_exec(escapeshellcmd("python {$chemain} animaux")));
+    */
+    $noStopWordList = prepareSearchInput($word);
+
+    $w = "w.libelle = '-1'";
+    foreach ($noStopWordList as $value) {
+        $w .= " or w.libelle = '$value'";
+    }
+
     try {
         $cnx = new connexion();
-        $req = "SELECT name,frequence,path FROM word w inner JOIN indexation i on i.wId=w.wId INNER JOIN file f on  f.fId=i.fId where (w.libelle = :libelle) order by frequence desc";
+        $req = "SELECT w.libelle,f.name,i.frequence,f.path FROM word w inner JOIN indexation i on i.wId=w.wId INNER JOIN file f on  f.fId=i.fId where {$w} order by frequence desc";
         $prep = $cnx->prepare($req);
-        $prep->execute(
-            array(
-                ':libelle' => $word
-            )
-        );
+        $prep->execute();
         $result = $prep->fetchAll(PDO::FETCH_ASSOC);
         $prep->closeCursor();
     } catch (PDOException $e) {
         print $e->getMessage();
     }
-    return $result;
+    //var_dump($result);
+    $c = 0;
+    $p = [];
+    $tab = [];
+    for ($i = 0; $i < count($result); $i++) {
+        if (!in_array($result[$i]["path"], $p)) {
+            $tab[$c] = $result[$i];
+            $p[$i] = $result[$i]["path"];
+            $k = 1;
+            for ($j = $i + 1; $j < count($result); $j++) {
+                if ($p[$i] == $result[$j]["path"]) {
+                    $tab[$c]["libelle{$k}"] = $result[$j]['libelle'];
+                    $tab[$c]["frequence{$k}"] = $result[$j]['frequence'];
+                    $k++;
+                }
+            }
+        }
+        $c++;
+    }
+    return $tab;
 }
 
 function pagination($nbr)
@@ -109,18 +155,6 @@ function pagination($nbr)
         return ((int) ($nbr / 4)) + 1;
     }
     return ($nbr / 4);
-}
-
-//Recuperer les donnees a afficher pour chaque page
-function getData($nbr = 1, $arr, $mot, $c)
-{
-    $filArray = array();
-    for ($i = (($nbr - 1) * 4); $i < (($nbr - 1) * 4) + 4; $i++) {
-        if ($i == count($arr))
-            break;
-        $filArray[] = $arr[$i];
-    }
-    _afficher($filArray, $mot, $c);
 }
 
 function generateWordCloud($keywords)
@@ -138,4 +172,13 @@ function generateWordCloud($keywords)
                         </span>";
     }
     return $wordCloud;
+}
+
+function spellCorrection($p){
+    $chemain = "../scripts/spellCorrector.py";
+    $exec = (shell_exec(escapeshellcmd('python ' . $chemain . ' "' . $p . '"')));
+    $w = str_replace(" ", "+", $exec);
+    $result = "http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/?search={$w}";
+
+    return "<a href={$result}>{$exec}</a>";
 }
