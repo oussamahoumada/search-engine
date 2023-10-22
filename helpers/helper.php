@@ -183,5 +183,8 @@ function spellCorrection($p){
     $w = str_replace(" ", "+", $exec);
     $result = "http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/?search={$w}";
 
-    return "<a href={$result}>{$exec}</a>";
+    if(trim($p) != trim($exec)){
+        echo "<i style='color:red'>Try with this spelling</i> : ";
+        echo "<a href={$result}>{$exec}</a>";
+    }
 }

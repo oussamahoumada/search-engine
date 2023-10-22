@@ -1,8 +1,6 @@
 <?php
-require_once(str_replace("\\views", "", __DIR__) . "/helpers/helper.php");
-require_once(str_replace("\\views", "", __DIR__) . "/helpers/LireRecursDir.php");
-explorerDir(str_replace("\\views", "", __DIR__) . "/txtFiles");
-session_start();
+    require_once(str_replace("\\views", "", __DIR__) . "/helpers/helper.php");
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -56,11 +54,8 @@ session_start();
             $result = _getWord($search);
             
             $c = count($result);
-
-            if($c==0){
-                echo "<i style='color:red'>Try with this spelling</i> : ";
-                echo(spellCorrection($search));
-            }
+            spellCorrection($search);
+            
 
             if (isset($_GET['p']) && $_GET['p'] > 0 && $_GET['p'] <= pagination($c)) {
                 $filArray = array_slice($result, ($_GET['p'] - 1) * 4, (($_GET['p'] - 1) * 4) + 4);
