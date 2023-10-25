@@ -10,53 +10,49 @@ require_once(str_replace("\\views", "", __DIR__) . "/helpers/LireRecursDir.php")
     <title>Document</title>
     <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>
-        function printChart(realLen, lenAfterCleaning, diff, chartName, title) {
-            console.log(chartName);
-            ctx = document.getElementById(chartName);
-            data = {
-                labels: [
-                    'real Length',
-                    'length after cleaning',
-                    'Differenece'
-                ],
-                datasets: [{
-                    label: 'words count ',
-                    data: [realLen, lenAfterCleaning, diff],
-                    backgroundColor: [
-                        'rgb(' + Math.random() * 256 + ',' + Math.random() * 256 + ',' + Math.random() * 256 + ')',
-                        'rgb(' + Math.random() * 256 + ',' + Math.random() * 256 + ',' + Math.random() * 256 + ')',
-                        'rgb(' + Math.random() * 256 + ',' + Math.random() * 256 + ',' + Math.random() * 256 + ')',
-                    ],
-                    hoverOffset: 4
-                }]
-            };
-            const options = {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        color: 'black',
-                        align: 'center',
-                        position: 'top',
-                        text: chartName,
-                    },
-                },
-            };
-            config = {
-                type: 'doughnut',
-                data: data,
-                options: options
-            };
-            new Chart(ctx, config);
-        }     
-    </script>
+
+    <script src='../scripts/chartGenerator.js'></script>
+
+    <style>
+        .btn_redirect {
+            padding: 1%;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            background-color: blue;
+            margin: 2% 5% 0 0;
+        }
+
+        .div_redirect {
+            text-align: end;
+        }
+    </style>
 </head>
 
-<body style="text-align: center;">
-    <?php
-    explorerDir(str_replace("\\views", "", __DIR__) . "/txtFiles");
-    ?>
+<body>
+    <div class="div_redirect">
+        <button class="btn_redirect" onclick="redirect()">
+            My Search Engine
+        </button>
+    </div>
+
+    <div style="text-align: center;">
+        <?php
+        explorerDir(str_replace("\\views", "", __DIR__) . "/txtFiles");
+        foreach (getAllFiles() as $value) {
+            $name = $value['name'];
+            $realLen = $value['word_count'];
+            $lenAfterCleaning = $value['word_delete_count'];
+            $diff = ((int) $realLen) - ((int) $lenAfterCleaning);
+            echo "<div style='width:300px; display:inline-block'>
+			    <canvas id='$name'></canvas>
+		    </div>";
+            echo "<script>
+			    printChart($realLen, $lenAfterCleaning, $diff, '$name');
+		    </script>";
+        }
+        ?>
+    </div>
 </body>
 
 </html>

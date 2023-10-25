@@ -26,10 +26,10 @@ function explorerDir($path)
 			{
 				$path_source = $path . "/" . $entree;
 				// ajouter fichier dans la base de donnée
-				$file = new fichiers($entree, $path_source);
+				$realLen = count(explode(" ", implode(" ", file($path_source))));
+				$words = _loadDataFromFile($path_source);
+				$file = new fichiers($entree, $path_source, $realLen, count($words));
 				if ($file->Add()) {
-					$words = _loadDataFromFile($path_source);
-
 					//ajouter les mot du fichier courant dans la base de donnée
 					$fId = findFile($entree, $path_source);
 					foreach ($words as $key => $value) {
@@ -46,10 +46,6 @@ function explorerDir($path)
 							$indx->Add();
 						}
 					}
-					$realLen = count(explode(" ", implode(" ", file($path_source))));
-					$lenAfterCleaning = count(_loadDataFromFile($path_source));
-					$diff = $realLen - $lenAfterCleaning;
-					displayChart($realLen, $lenAfterCleaning, $diff, $entree);
 					echo '<script>
 							console.log("Le fichier ' . $entree . ' avec le chemain ' . $path_source . ' qui contien ' . count($words) . ' mots est ajouter.");
 						</script>';
@@ -58,15 +54,5 @@ function explorerDir($path)
 		}
 	}
 	closedir($folder);
-}
-
-function displayChart($realLen, $lenAfterCleaning, $diff, $chartName)
-{
-	echo "<div style='width:300px; display:inline-block'>
-			<canvas id='$chartName'></canvas>
-		</div>";
-	echo "<script>
-			printChart($realLen, $lenAfterCleaning, $diff, '$chartName');
-		</script>";
 }
 ?>

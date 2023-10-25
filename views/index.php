@@ -1,6 +1,6 @@
 <?php
-    require_once(str_replace("\\views", "", __DIR__) . "/helpers/helper.php");
-    session_start();
+require_once(str_replace("\\views", "", __DIR__) . "/helpers/helper.php");
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +17,8 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles/index.css">
+    <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+    <script src='../scripts/chartGenerator.js'></script>
 </head>
 
 <body>
@@ -50,17 +52,17 @@
 
         if ($search != "") {
             $tab = explode(" ", $search);
-            
+
             $result = _getWord($search);
-            
+
             $c = count($result);
             spellCorrection($search);
-            
+
 
             if (isset($_GET['p']) && $_GET['p'] > 0 && $_GET['p'] <= pagination($c)) {
                 $filArray = array_slice($result, ($_GET['p'] - 1) * 4, (($_GET['p'] - 1) * 4) + 4);
             } else {
-                $filArray = array_slice($result, 0, 4);                
+                $filArray = array_slice($result, 0, 4);
             }
             _afficher($filArray, $search, $c);
             //Pagination
@@ -81,19 +83,7 @@
         }
         ?>
     </div>
-    <script>
-        function showDialog(param) {
-            param.addEventListener("keydown", (e) => {
-                if (e.key === "Escape") {
-                    e.preventDefault();
-                }
-            });
-            param.showModal();
-        }
-        function closeDialog(param) {
-            param.close();
-        }
-    </script>
+
 </body>
 
 </html>
