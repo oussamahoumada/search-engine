@@ -22,6 +22,22 @@ session_start();
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand"
+            href="http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/indexation.php">
+            Indexation
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link"
+                        href="http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/index.php">
+                        Search Engine
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <h1 class="title"> Search Engine </h1>
     <div class="content">
         <form class="row" style="padding-bottom:1%">
