@@ -187,7 +187,7 @@ function generateWordCloud($keywords)
         $red = rand(0, 255); // Random red value for color
         $green = rand(0, 255); // Random green value for color
         $blue = rand(0, 255); // Random blue value for color
-        if (!is_numeric($keyword))
+        if (!is_numeric($keyword) && $value > 1)
             $wordCloud .= " <span >
                             <a style='text-decoration: none;font-size:{$fontSize}%; color: rgb({$red},{$green},{$blue});' href='http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/?search={$keyword}'>{$keyword}</a>
                             <sup>{$value}</sup> 
