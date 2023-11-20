@@ -11,8 +11,11 @@ function _multiexplode($delimiters, $string)
 
 //Cette fonction return tous les mots et le nobre de repetition de chaque mot d'un fichier donnee
 function _loadDataFromFile($path)
-{
+{   
     $imp = implode(" ", file($path));
+    if(strpos($path,".html")!=false){
+        $imp = strip_tags(file_get_contents("./test.html"));
+    }
     $exp = prepareSearchInput($imp);
     return array_count_values($exp);
 }
