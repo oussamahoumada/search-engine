@@ -11,10 +11,10 @@ function _multiexplode($delimiters, $string)
 
 //Cette fonction return tous les mots et le nobre de repetition de chaque mot d'un fichier donnee
 function _loadDataFromFile($path)
-{   
+{
     $imp = implode(" ", file($path));
-    if(strpos($path,".html")!=false){
-        $imp = strip_tags(file_get_contents("./test.html"));
+    if (strpos($path, ".html") != false) {
+        $imp = strip_tags(file_get_contents($path));
     }
     $exp = prepareSearchInput($imp);
     return array_count_values($exp);
@@ -92,12 +92,12 @@ function _afficher($result, $mot, $c)
         echo '
             <dialog id="' . $dialogChart . '" style="border-color:white; border-radius:5%">
                 <header style="text-align:end">
-                    <button onclick="'.$dialogChartClose.'" style="border: none;background: none;">&#x2716</button>
+                    <button onclick="' . $dialogChartClose . '" style="border: none;background: none;">&#x2716</button>
                 </header>
                 <div style="width:300px; display:inline-block">
-                    <canvas id="'.$dialogChart.''.$k.'"></canvas>
+                    <canvas id="' . $dialogChart . '' . $k . '"></canvas>
                 </div>
-                <script> printChart(' . ((int)$v["word_count"]) . ',' . ((int)$v["word_delete_count"]) . ',' . ((int)((int)$v["word_count"]) - ((int)$v["word_delete_count"])) . ',' . $dialogChart . '' . $k .',"'.$v["name"]. '") </script>
+                <script> printChart(' . ((int) $v["word_count"]) . ',' . ((int) $v["word_delete_count"]) . ',' . ((int) ((int) $v["word_count"]) - ((int) $v["word_delete_count"])) . ',' . $dialogChart . '' . $k . ',"' . $v["name"] . '") </script>
             </dialog>
         ';
     }
