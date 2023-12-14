@@ -4,7 +4,7 @@ require_once(__DIR__ . "/helper.php");
 require_once(str_replace("\\helpers", "", __DIR__) . "/class/word.php");
 require_once(str_replace("\\helpers", "", __DIR__) . "/class/indexation.php");
 
-function explorerDir($path)
+function explorerDir($path, $list_lemm)
 {
 	$folder = opendir($path);
 
@@ -20,14 +20,15 @@ function explorerDir($path)
 
 				// On parcours le nouveau repertoire
 				// En appellant la fonction avec le nouveau repertoire
-				explorerDir($path);
+				explorerDir($path, $list_lemm);
 				$path = $sav_path;
 			} else //C'est un fichier
 			{
 				$path_source = $path . "/" . $entree;
 				// ajouter fichier dans la base de donnée
 				$realLen = count(explode(" ", implode(" ", file($path_source))));
-				$words = _loadDataFromFile($path_source);
+				$_words = _loadDataFromFile($path_source);
+				$words = lemmatisation($_words, $list_lemm);
 				$file = new fichiers($entree, $path_source, $realLen, count($words));
 				if ($file->Add()) {
 					//ajouter les mot du fichier courant dans la base de donnée
@@ -35,7 +36,6 @@ function explorerDir($path)
 					foreach ($words as $key => $value) {
 						$wId = null;
 						if ($key != "" && !is_numeric($key)) {
-							//$newWord = shell_exec(escapeshellcmd("python lemmatisation.py ".$key));
 							$wId = findWord($key);
 							if ($wId == false) {
 								$word = new word($key);

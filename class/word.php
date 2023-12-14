@@ -71,3 +71,18 @@ function findWord($libelle){
         }
     return $result;
 }
+
+function getAllLemme()
+{
+    try {
+        $cnx = new connexion();
+        $req = "SELECT * FROM lemmatisation";
+        $prep = $cnx->prepare($req);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+        $prep->closeCursor();
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+    return $result;
+}

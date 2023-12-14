@@ -1,7 +1,6 @@
 <?php
 require_once(str_replace("\\views", "", __DIR__) . "/helpers/helper.php");
 require_once(str_replace("\\views", "", __DIR__) . "/helpers/LireRecursDir.php");
-explorerDir(str_replace("\\views", "", __DIR__) . "/txtFiles");
 session_start();
 ?>
 
@@ -25,8 +24,14 @@ session_start();
     <h1 style="text-align:center;">Content</h1>
     <div class="fileContent">
         <?php
-        if (isset($_GET['url']))
-            echo _addStyle(file_get_contents($_GET['url']), $_SESSION["search"]);
+        if (isset($_GET['url'])) {
+            if (strpos($_GET['url'], ".pdf") != false) {
+                $url = str_replace("C:\wamp64\www\\", "http://localhost/", $_GET['url']);
+                echo "<embed  src='{$url}' width='100%' type='application/pdf' height='600px'></embed >";
+            } else
+                echo _addStyle(file_get_contents($_GET['url']), $_SESSION["search"]);
+        }
+
         ?>
     </div>
 </body>

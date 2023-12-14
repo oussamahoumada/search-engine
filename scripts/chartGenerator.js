@@ -61,7 +61,7 @@ function printChart(realLen, lenAfterCleaning, diff, chartName, title) {
 }
 function redirect() {
   window.location.href =
-    "http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/index.php";
+    "http://localhost/Paris8/master2/search-engine/views/index.php";
 }
 
 

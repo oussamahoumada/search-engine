@@ -24,14 +24,14 @@ session_start();
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand"
-            href="http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/indexation.php">
+            href="http://localhost/Paris8/master2/search-engine/views/indexation.php">
             Indexation
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link"
-                        href="http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/index.php">
+                        href="http://localhost/Paris8/master2/search-engine/views/index.php">
                         Search Engine
                     </a>
                 </li>

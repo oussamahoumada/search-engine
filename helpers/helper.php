@@ -12,12 +12,24 @@ function _multiexplode($delimiters, $string)
 //Cette fonction return tous les mots et le nobre de repetition de chaque mot d'un fichier donnee
 function _loadDataFromFile($path)
 {
-    $imp = implode(" ", file($path));
     if (strpos($path, ".html") != false) {
         $imp = strip_tags(file_get_contents($path));
     }
+    if (strpos($path, ".pdf") != false) {
+        $chemain = "C:\wamp64\www\Paris8\Master2\search-engine/scripts/pdf_to_text.py";
+        $imp = (shell_exec(escapeshellcmd('python ' . $chemain . ' "' . $path . '"')));
+    }
+    if (strpos($path, ".txt") != false) {
+        $imp = implode(" ", file($path));
+    }
     $exp = prepareSearchInput($imp);
-    return array_count_values($exp);
+    $arrayCount = array_count_values($exp);
+    foreach ($arrayCount as $key => $value) {
+        if (preg_match('/\d/', $key) || strlen($key) <= 3) {
+            unset($arrayCount[$key]);
+        }
+    }
+    return $arrayCount;
 }
 
 //Cette fonction permet a supprimer les espaces et transformer majuscule en minuscule
@@ -57,7 +69,7 @@ function _afficher($result, $mot, $c)
             }
         }
 
-        $path = "http://localhost/Paris8/Master2/tp-web-search-engine/search-engine/views/affichage/?url=" . $v['path'];
+        $path = "http://localhost/Paris8/Master2/search-engine/views/affichage/?url=" . $v['path'];
         $dialog = "dialogBox_$k";
         $dialogChart = "dialogChart_$k";
         $dialogChartFunc = 'showDialog("dialogChart_' . $k . '")';
@@ -78,7 +90,11 @@ function _afficher($result, $mot, $c)
                     </button>
             </li>");
 
-        echo "<p style='margin-left:20px; font-size:12px; opacity: 50%;'>" . _addStyle(file_get_contents($v['path'], null, null, null, 250), $mot) . " ...</p>";
+        if (strpos($v['path'], ".pdf") != false) {
+            echo ("<br><br>");
+        } else {
+            echo "<p style='margin-left:20px; font-size:12px; opacity: 50%;'>" . _addStyle(file_get_contents($v['path'], null, null, null, 250), $mot) . " ...</p>";
+        }
         $keywords = _loadDataFromFile($v['path']);
         $wordCloudHTML = generateWordCloud($keywords);
         echo '
@@ -192,7 +208,7 @@ function generateWordCloud($keywords)
         $blue = rand(0, 255); // Random blue value for color
         if (!is_numeric($keyword) && $value > 1)
             $wordCloud .= " <span >
-                            <a style='text-decoration: none;font-size:{$fontSize}%; color: rgb({$red},{$green},{$blue});' href='http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/?search={$keyword}'>{$keyword}</a>
+                            <a style='text-decoration: none;font-size:{$fontSize}%; color: rgb({$red},{$green},{$blue});' href='http://localhost/Paris8/master2/search-engine/views/?search={$keyword}'>{$keyword}</a>
                             <sup>{$value}</sup> 
                         </span>";
     }
@@ -204,10 +220,30 @@ function spellCorrection($p)
     $chemain = "../scripts/spellCorrector.py";
     $exec = (shell_exec(escapeshellcmd('python ' . $chemain . ' "' . $p . '"')));
     $w = str_replace(" ", "+", $exec);
-    $result = "http://localhost/Paris8/master2/tp-web-search-engine/search-engine/views/?search={$w}";
+    $result = "http://localhost/Paris8/master2/search-engine/views/?search={$w}";
 
     if (trim($p) != trim($exec)) {
         echo "<i style='color:red'>Try with this spelling</i> : ";
         echo "<a href={$result}>{$exec}</a>";
     }
+}
+
+function lemmatisation($list, $list_lemm)
+{
+    //$list_lemm = getAllLemme();
+    $new_array = [];
+    foreach ($list as $key => $value) {
+        $res = array_search($key, array_column($list_lemm, 'ortho'));
+        if ($res) {
+            $lem = $list_lemm[$res]["lemme"];
+            if (array_key_exists($lem, $new_array)) {
+                $new_array[$lem] = $new_array[$lem] + $value;
+            } else {
+                $new_array[$lem] = $value;
+            }
+        } else {
+            $new_array[$key] = $value;
+        }
+    }
+    return $new_array;
 }
