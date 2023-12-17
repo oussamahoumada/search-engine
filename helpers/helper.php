@@ -1,5 +1,7 @@
 <?php
 require_once(str_replace("\\helpers", "", __DIR__) . "/class/connexion.php");
+require_once(str_replace("\\helpers", "", __DIR__) . "/class/word.php");
+
 
 //Cette fonction permet de separer les mots par une list de separateur donnée
 function _multiexplode($delimiters, $string)
@@ -25,7 +27,7 @@ function _loadDataFromFile($path)
     $exp = prepareSearchInput($imp);
     $arrayCount = array_count_values($exp);
     foreach ($arrayCount as $key => $value) {
-        if (preg_match('/\d/', $key) || strlen($key) <= 3) {
+        if (preg_match('/\d/', $key) || strlen($key) <= 2) {
             unset($arrayCount[$key]);
         }
     }
@@ -145,16 +147,16 @@ function prepareSearchInput($serchInput)
     return _deleteStopWords($exp);
 }
 //Cette fonction permet de chercher un mot dans la base de donnée
-function _getWord($word)
+function _getWord($words)
 {
     /*
         $chemain = "../scripts/lemmatisation.py";
         var_dump(shell_exec(escapeshellcmd("python {$chemain} animaux")));
     */
-    $noStopWordList = prepareSearchInput($word);
+    //$noStopWordList = prepareSearchInput($word);
 
     $w = "w.libelle = '-1'";
-    foreach ($noStopWordList as $value) {
+    foreach ($words as $value) {
         $w .= " or w.libelle = '$value'";
     }
 
@@ -243,6 +245,25 @@ function lemmatisation($list, $list_lemm)
             }
         } else {
             $new_array[$key] = $value;
+        }
+    }
+    return $new_array;
+}
+
+function lemmatisation_sersh($list, $list_lemm)
+{
+    $new_array = [];
+    foreach ($list as $key => $value) {
+        $res = array_search($value, array_column($list_lemm, 'ortho'));
+        if ($res) {
+            $lem = $list_lemm[$res]["lemme"];
+            if (array_search($lem, $new_array)) {
+
+            } else {
+                array_push($new_array, $lem);
+            }
+        } else {
+            array_push($new_array, $value);
         }
     }
     return $new_array;

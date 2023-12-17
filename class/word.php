@@ -86,3 +86,34 @@ function getAllLemme()
     }
     return $result;
 }
+
+
+function getAllWords()
+{
+    try {
+        $cnx = new connexion();
+        $req = "SELECT SUM(word_count) as 'count' FROM `file`";
+        $prep = $cnx->prepare($req);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+        $prep->closeCursor();
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+    return $result;
+}
+
+function getAddedWords()
+{
+    try {
+        $cnx = new connexion();
+        $req = "SELECT COUNT(*) as 'count' FROM `word`";
+        $prep = $cnx->prepare($req);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+        $prep->closeCursor();
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+    return $result;
+}

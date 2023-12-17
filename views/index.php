@@ -69,7 +69,11 @@ session_start();
         if ($search != "") {
             $tab = explode(" ", $search);
 
-            $result = _getWord($search);
+            $noStopWordList = prepareSearchInput($search);
+            $search_lemmatisation = lemmatisation_sersh($noStopWordList, getAllLemme());
+            $result = _getWord($search_lemmatisation);
+            
+            
 
             $c = count($result);
             spellCorrection($search);

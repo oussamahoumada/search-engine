@@ -1,10 +1,9 @@
 function printChart(realLen, lenAfterCleaning, diff, chartName, title) {
-  console.log(diff,chartName)
-  if (typeof (chartName) == "string") {
+  console.log(diff, chartName);
+  if (typeof chartName == "string") {
     ctx = document.getElementById(chartName);
     title = chartName;
-  }
-  else {
+  } else {
     ctx = chartName;
   }
   data = {
@@ -64,14 +63,13 @@ function redirect() {
     "http://localhost/Paris8/master2/search-engine/views/index.php";
 }
 
-
 function showDialog(param) {
   if (typeof param == "string") {
     ctx = document.getElementById(param);
   } else {
     ctx = param;
   }
-  console.log(ctx)
+  console.log(ctx);
   ctx.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       e.preventDefault();

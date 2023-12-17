@@ -79,7 +79,16 @@ require_once(str_replace("\\views", "", __DIR__) . "/class/word.php");
         </div>
     </nav>
     <div id="spinner"></div>
-    <div style="text-align: center;">
+
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <button class="nav-link active" aria-current="page" onclick="toggle('file')">Files Stats</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="toggle('all')">All stats</button>
+        </li>
+    </ul>
+    <div style="text-align: center;" id="charts">
         <?php
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submitBtn"])) {
@@ -102,10 +111,36 @@ require_once(str_replace("\\views", "", __DIR__) . "/class/word.php");
         }
         ?>
     </div>
+    <div id="chart" style="text-align: center;">
+        <?php
+        $name = "allstats";
+        $realLen = getAllWords()[0]['count'];
+        $lenAfterCleaning = getAddedWords()[0]['count'];
+        $diff = ((int) $realLen) - ((int) $lenAfterCleaning);
+        echo "<div style='width:300px; display:inline-block'>
+			    <canvas id='allstats'></canvas>
+		    </div>";
+        echo "<script>
+			    printChart($realLen, $lenAfterCleaning, $diff, '$name');
+		    </script>";
+        ?>
+    </div>
     <script>
+        document.getElementById("charts").style.display = "block";
+        document.getElementById("chart").style.display = "none";
         function showSpinner() {
             document.getElementById("spinner").style.display = "block";
             //document.getElementById("spinner").style.display = "none";
+        }
+        function toggle(test) {
+            if (test == "all") {
+                document.getElementById("charts").style.display = "none";
+                document.getElementById("chart").style.display = "block";
+            }
+            else {
+                document.getElementById("charts").style.display = "block";
+                document.getElementById("chart").style.display = "none";
+            }
         }
     </script>
 </body>
